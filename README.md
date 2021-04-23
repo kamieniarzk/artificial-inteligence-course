@@ -5,4 +5,4 @@ Co-author: [Jakub Szumski](https://github.com/Szuumii)
 * ###  Task 1 - Gradient descent and Newton's method
 Minimizing a quadratic n-variable function using Gradient descent and Newton's method
 * ### Task 2 - Evolutionary genetic algorithm
-Maximizing a quadratic n-variable function using an evolutionary algorithm with single-point crossover, roulette selection with scaling and FIFO replacement.
+Maximizing a quadratic n-variable function using an evolutionary algorithm with single-point crossover and mutation using binary vectors, roulette selection with scaling and FIFO replacement.
