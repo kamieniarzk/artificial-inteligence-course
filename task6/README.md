@@ -23,8 +23,19 @@ We've devided the whole dataset into 3 subsets and randomly distributed 1599 sam
 
 ## Evaluation metrics
 To assess our classifiers, We've used several metrics, including:
+* Accuracy - simply the total number of correct predictions divided by the total number of predictions made for a dataset.
+* Recall - number of the correctly identified positive predictions divided by the sum of true positive predictions and false negative predictions.
+* F1 - the harmonic mean of Precision and Recall, it gives a better measure of the incorrectly classified cases than the Accuracy.
 
-## Support vector machine
+<center>
+
+![](images/f1.png)
+
+</center>
+
+* Confusion matrix is a matrix visualizing the relationship between the predicted values and the actual values, the diagonal elements represent the number of points for which the predicted label is equal to the true label, while off-diagonal elements are those mislabeles by the classifier.
+
+# Support vector machine
 For implementing the classifiers, we used a library called [scikit-learn](https://scikit-learn.org/stable/). The hyperparameters that were taken into account while assessing the classifier's performance were:
 * kernel, 
 * dropout rate,
@@ -38,48 +49,60 @@ In order to avoid overfitting on the test set, for tuning of the parameters We'v
 * `Linear CV accuracy: 0.54 % with the standard deviation: 0.08`
 
 
-For all of the three kernels, We've chosen such hyperparameters that yielded best results, which was:
-* For RBF - (gamma = 'auto', C = 0.8)
-* for polynomial - (C = 0.8, degree = 3, coefficient = 2),
-* for linear - (C = 0.8).
+For all of the three kernels, We've chosen such hyperparameters that yielded best results, which were:  
+<center>
+  
+Kernel    | Gamma | C | degree | coefficient |
+----------|:-----:|---|:------:|:-----------:|
+Polynomial|       |0.8|3       |2            |
+Linear    |       |0.8|        |             |
+RBF       |auto   |0.8|        |             |
+
+</center>
+  
 
 For given set of hyperparameters, the results are:  
 ```python
 RBF Kernel:
-Accuracy:  60.62 %
-Recall: 60.62 %
-F1: 57.70 %
+Accuracy:  57.50 %
+Recall: 57.50 %
+F1: 55.55 %
 Confusion Matrix:
-[[ 0  4  3  0  0]
- [ 0 41 22  0  0]
- [ 0 25 42  0  0]
- [ 0  1 18  0  0]
- [ 0  1  3  0  0]]
+[ 0  0  0  3  0  0]
+[ 0  0  3  0  0  0]
+[ 0  0 40 32  0  0]
+[ 0  0 13 51  0  0]
+[ 0  0  0 13  0  0]
+[ 0  0  0  5  0  0]
 
 Polynomial Kernel:
-Accuracy: 53.75 %
-Recall: 53.75 %
-F1: 49.94 %
+Accuracy: 56.88 %
+Recall: 56.88 %
+F1: 52.41 %
 Confusion Matrix:
-[[ 0  0  2  0]
- [ 0 44 28  0]
- [ 0 17 41  0]
- [ 0  1 26  1]]
+[ 0  0  0  3  0  0]
+[ 0  0  3  0  0  0]
+[ 0  0 40 32  0  0]
+[ 0  0 13 51  0  0]
+[ 0  0  0 13  0  0]
+[ 0  0  0  5  0  0]
 
 Linear Kernel:
-Accuracy: 54.37 %
-Recall: 54.37 %
-F1: 49.23 %
+Accuracy: 63.12 %
+Recall: 63.12 %
+F1: 58.12 %
 Confusion Matrix:
-[[ 0  1  1  0]
- [ 0 54 18  0]
- [ 0 25 33  0]
- [ 0  1 27  0]]
+[ 0  0  3  0  0  0]
+[ 0  0  3  0  0  0]
+[ 0  0 56 16  0  0]
+[ 0  0 19 45  0  0]
+[ 0  0  0 13  0  0]
+[ 0  0  0  5  0  0]
 
 ```
 Comparing those metrics, We can observe, that the best results for the SVM classifier were obtained using the **RBF kernel**.
 
-## Random forest
+# Random forest
 Another classifier that we've used in our excerise was Random forest classifier. Similarly like in the previous one, the implementation is from the scikit-learn library. In case of this classifier, the only hypermarameter which has been considered was `n_estimators` which represents the number of trees in the forest. After the cross-validation process, the optimal value of `n_estimators` obtained was 100. Increasing the number over 100 did not have any effect on the validation and final evaluation.
 
 * `Random forest CV accuracy: 0.63 % with the standard deviation: 0.07`
@@ -88,36 +111,38 @@ The metrics obtained for such value of the hyperparameter were:
 
 ```python
 Random forest:
-Accuracy: 70.62 %
-Recall: 70.62 %
-F1: 68.78 %
+Accuracy: 75.00 %
+Recall: 75.00 %
+F1: 73.45 %
 Confusion Matrix:
-[[ 0  5  2  0  0]
- [ 1 53  8  1  0]
- [ 0 18 47  2  0]
- [ 0  1  6 12  0]
- [ 0  0  1  2  1]]
+[ 0  1  2  0  0  0]
+[ 0  0  2  1  0  0]
+[ 0  0 61 10  1  0]
+[ 0  0 11 48  5  0]
+[ 0  0  0  3 10  0]
+[ 0  0  0  1  3  1]
 ```
 
-## k-nearest neighbour classifier
+# k-nearest neighbour classifier
 The third classifier, that we've implemented was k-nearest neighbour classifier, also using the scikit-learn library. The only hyperparameter that considerably changed the obtained results was `n_neighbours` which determined the number of neighbours taken into consideration when predicting the class of the test sample. After cross-validation, the best results were obtained for `n_neighbours = 5`.
 
-* `KNN CV accuracy: 0.44 % with a standard deviation of: 0.02`
+* `KNN CV accuracy: 0.44 % with the standard deviation of: 0.02`
 
 The evaluation for the setup above was: 
 
 ```python
 K-Nearest neighbors:
-Accuracy: 54.37 %
-Recall: 54.37 %
-F1: 51.51 %
+Accuracy: 43.75 %
+Recall: 43.75 %
+F1: 42.70 %
 Confusion Matrix:
-[[ 0  5  2  0  0]
- [ 0 42 20  1  0]
- [ 1 23 41  2  0]
- [ 0  2 13  4  0]
- [ 0  2  1  1  0]]
+[ 0  0  1  2  0  0]
+[ 0  0  2  1  0  0]
+[ 0  2 35 34  1  0]
+[ 0  0 27 28  9  0]
+[ 0  0  2  4  7  0]
+[ 0  0  0  2  3  0]
 ```
 
-## Final remarks
-Although for each type of classifier, we've managed to extract such setups (hyperparameters) that were performing best in most situations, it is important to note, that the overall results were fluctuating over each iteration. This indicates, that the performance of the classifiers was highly dependent on the division of the dataset (as it was randomly distributed in each iteration). Comparing all the used classifiers, it was clear, that the best performance overall was provided by the Random forest classifier.
+# Final remarks
+Although for each type of classifier, we've managed to extract such setups (hyperparameters) that were performing best in most situations, it is important to note, that the overall results were fluctuating over each iteration. This indicates, that the performance of the classifiers was highly dependent on the division of the dataset (as it was randomly distributed in each iteration). Comparing all the used classifiers, it was clear, that the best performance overall was provided by the **Random forest** classifier.
